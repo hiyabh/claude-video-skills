@@ -1,0 +1,100 @@
+<!doctype html>
+<html data-composition-variables='[
+  {"id":"name","type":"string","label":"Name","default":"נועה"},
+  {"id":"tag","type":"string","label":"Tag line","default":""},
+  {"id":"badge","type":"boolean","label":"Playful badge style","default":false}
+]'>
+<head><meta charset="utf-8"></head>
+<body style="background: transparent;">
+  <div data-composition-id="lower" data-width="576" data-height="1024" data-start="0" data-duration="4.5">
+    <style>
+      @font-face { font-family: 'Heebo'; src: url('../fonts/heebo-hebrew.woff2') format('woff2'); font-weight: 400 900; unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+      @font-face { font-family: 'Heebo'; src: url('../fonts/heebo-latin.woff2') format('woff2'); font-weight: 400 900; }
+      @font-face { font-family: 'Secular One'; src: url('../fonts/secularone-hebrew.woff2') format('woff2'); unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+      @font-face { font-family: 'Secular One'; src: url('../fonts/secularone-latin.woff2') format('woff2'); }
+      [data-composition-id="lower"] {
+        position: relative;
+        overflow: hidden;
+        background: transparent;
+        font-family: 'Heebo', sans-serif;
+        direction: rtl;
+      }
+      .wrap {
+        position: absolute;
+        right: 26px;
+        bottom: 130px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .pill {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(135deg, rgba(22, 13, 43, 0.92), rgba(42, 24, 80, 0.92));
+        border: 2px solid #F6C453;
+        border-radius: 40px;
+        padding: 10px 26px 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #FF8FB1;
+        box-shadow: 0 0 12px rgba(255, 143, 177, 0.9);
+      }
+      .nm {
+        font-family: 'Secular One', 'Heebo', sans-serif;
+        font-size: 44px;
+        line-height: 1.15;
+        color: #FFF8EC;
+      }
+      .tag {
+        margin-right: 18px;
+        font-size: 24px;
+        font-weight: 600;
+        color: #F6C453;
+        background: rgba(22, 13, 43, 0.82);
+        border-radius: 22px;
+        padding: 4px 16px 6px;
+      }
+      .badge-style .pill {
+        border-color: #FF8FB1;
+        transform-origin: center;
+      }
+      .badge-style .nm { color: #FFE08A; }
+    </style>
+
+    <div class="wrap" id="wrap">
+      <div class="pill" id="pill">
+        <div class="dot" id="dot"></div>
+        <div class="nm" id="nm"></div>
+      </div>
+      <div class="tag" id="tag"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const vars = window.__hyperframes.getVariables();
+      document.getElementById("nm").textContent = vars.name;
+      const tagEl = document.getElementById("tag");
+      if (vars.tag) { tagEl.textContent = vars.tag; } else { tagEl.style.display = "none"; }
+      if (vars.badge) { document.getElementById("wrap").classList.add("badge-style"); }
+
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#pill", { x: 360, opacity: 0, rotation: vars.badge ? -6 : 0, duration: 0.65, ease: "back.out(1.7)" }, 0.25);
+      tl.from("#dot", { scale: 0, duration: 0.4, ease: "back.out(3)" }, 0.7);
+      if (vars.tag) {
+        tl.from("#tag", { x: 200, opacity: 0, duration: 0.5, ease: "power3.out" }, 0.55);
+      }
+      tl.to("#dot", { scale: 1.5, duration: 0.5, ease: "sine.inOut", repeat: 3, yoyo: true }, 1.1);
+      // overlay is its own final scene — slide out before the segment continues
+      tl.to("#wrap", { x: 420, opacity: 0, duration: 0.5, ease: "power2.in" }, 3.9);
+      window.__timelines["lower"] = tl;
+    </script>
+  </div>
+</body>
+</html>

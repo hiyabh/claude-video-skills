@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="he">
+  <head>
+    <meta charset="utf-8" />
+    <script src="gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rubik";
+        font-weight: 500;
+        src: url("fonts/rubik-500.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Rubik";
+        font-weight: 700;
+        src: url("fonts/rubik-700.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Rubik";
+        font-weight: 900;
+        src: url("fonts/rubik-900.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Suez One";
+        font-weight: 400;
+        src: url("fonts/suez.woff2") format("woff2");
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      #comp {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: #f4e4c5;
+        font-family: "Rubik", sans-serif;
+      }
+      /* image layers */
+      .layer {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity;
+      }
+      .layer .kb {
+        position: absolute;
+        inset: -4%;
+        width: 108%;
+        height: 108%;
+        object-fit: cover;
+        will-change: transform;
+      }
+      /* bottom scrim for caption legibility */
+      #scrim {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 620px;
+        z-index: 20;
+        background: linear-gradient(
+          to top,
+          rgba(40, 22, 8, 0.62) 0%,
+          rgba(40, 22, 8, 0.34) 42%,
+          rgba(40, 22, 8, 0) 100%
+        );
+        pointer-events: none;
+      }
+      /* captions */
+      #caps {
+        position: absolute;
+        left: 40px;
+        right: 40px;
+        bottom: 250px;
+        z-index: 40;
+        text-align: center;
+        direction: rtl;
+      }
+      .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        direction: rtl;
+        unicode-bidi: isolate;
+        font-family: "Rubik", sans-serif;
+        font-weight: 900;
+        font-size: 78px;
+        line-height: 1.25;
+        color: #fff7e8;
+        text-shadow:
+          0 0 4px rgba(60, 30, 0, 0.9),
+          4px 4px 0 #5a2d00,
+          -2px -2px 0 #5a2d00,
+          2px -2px 0 #5a2d00,
+          -2px 2px 0 #5a2d00,
+          0 8px 22px rgba(0, 0, 0, 0.45);
+      }
+      /* title card */
+      #title {
+        position: absolute;
+        inset: 0;
+        z-index: 60;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        opacity: 0;
+      }
+      #title .halo {
+        position: absolute;
+        width: 1200px;
+        height: 1200px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 235, 170, 0.55) 0%, rgba(255, 235, 170, 0) 62%);
+      }
+      #title h1 {
+        position: relative;
+        font-family: "Suez One", serif;
+        font-size: 150px;
+        color: #fff;
+        text-align: center;
+        direction: rtl;
+        line-height: 1.1;
+        padding: 0 60px;
+        text-shadow:
+          5px 5px 0 #b5651d,
+          -3px -3px 0 #b5651d,
+          0 14px 36px rgba(0, 0, 0, 0.4);
+      }
+      #title .sub {
+        position: relative;
+        font-family: "Rubik", sans-serif;
+        font-weight: 700;
+        font-size: 56px;
+        color: #fff3d6;
+        direction: rtl;
+        text-shadow: 3px 3px 0 #b5651d, 0 8px 20px rgba(0, 0, 0, 0.35);
+      }
+      /* floating music notes */
+      .note {
+        position: absolute;
+        z-index: 30;
+        font-size: 90px;
+        color: #fff;
+        opacity: 0;
+        text-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+        will-change: transform, opacity;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="comp"
+      data-composition-id="david-pilgrimage"
+      data-start="0"
+      data-duration="100.88"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- master audio -->
+      <audio
+        id="song"
+        data-start="0"
+        data-duration="100.88"
+        data-track-index="0"
+        src="assets/song.mp3"
+      ></audio>
+
+      <!-- image layers (chronological; DOM order = paint order) -->
+      <div class="layer" id="L0"><img class="kb" src="assets/images/scene_01_morning.png" /></div>
+      <div class="layer" id="L1"><img class="kb" src="assets/images/scene_02_journey.png" /></div>
+      <div class="layer" id="L2"><img class="kb" src="assets/images/scene_03_jerusalem.png" /></div>
+      <div class="layer" id="L3"><img class="kb" src="assets/images/scene_04_priests.png" /></div>
+      <div class="layer" id="L4"><img class="kb" src="assets/images/scene_05_wave.png" /></div>
+      <div class="layer" id="L5"><img class="kb" src="assets/images/scene_07_together.png" /></div>
+      <div class="layer" id="L6"><img class="kb" src="assets/images/scene_06_bikkurim.png" /></div>
+      <div class="layer" id="L7"><img class="kb" src="assets/images/scene_07_together_b.png" /></div>
+      <div class="layer" id="L8"><img class="kb" src="assets/images/scene_04_priests_b.png" /></div>
+      <div class="layer" id="L9"><img class="kb" src="assets/images/scene_08_outro.png" /></div>
+
+      <div id="scrim"></div>
+
+      <!-- floating notes -->
+      <div class="note" id="n0">♪</div>
+      <div class="note" id="n1">♫</div>
+      <div class="note" id="n2">♬</div>
+      <div class="note" id="n3">♪</div>
+      <div class="note" id="n4">♩</div>
+
+      <!-- captions -->
+      <div id="caps"></div>
+
+      <!-- title card -->
+      <div id="title">
+        <div class="halo"></div>
+        <h1>דָּוִד עוֹלֶה לָרֶגֶל</h1>
+        <div class="sub">שיר מצויר לילדים 🎶</div>
+      </div>
+
+      <script>
+        (function () {
+          var DUR = 100.88;
+
+          /* ---- scene layers: [id, src-index, start, end] crossfade 0.6s ---- */
+          var SCENES = [
+            ["L0", 0.0, 13.2],
+            ["L1", 13.0, 19.9],
+            ["L2", 19.7, 33.4],
+            ["L3", 33.2, 39.7],
+            ["L4", 39.5, 46.5],
+            ["L5", 46.3, 60.0],
+            ["L6", 59.8, 66.7],
+            ["L7", 66.5, 73.3],
+            ["L8", 73.1, 86.6],
+            ["L9", 86.4, DUR],
+          ];
+          /* Ken Burns presets: [scaleFrom, xFrom, yFrom, scaleTo, xTo, yTo] */
+          var KB = [
+            [1.06, 0, 0, 1.18, 0, -24],
+            [1.18, 30, 10, 1.06, -20, -10],
+            [1.05, 0, 20, 1.16, 0, -28],
+            [1.16, -25, 0, 1.05, 25, 0],
+            [1.05, 0, 0, 1.16, 0, -22],
+            [1.18, 20, -10, 1.05, -20, 14],
+            [1.05, -15, 10, 1.16, 15, -16],
+            [1.16, 25, 0, 1.05, -25, -8],
+            [1.05, 0, 22, 1.18, 0, -26],
+            [1.06, 0, -10, 1.2, 0, 24],
+          ];
+
+          /* ---- caption groups: [text, start, end] (niqqud lyrics) ---- */
+          var GROUPS = [
+            ["דָּוִד קָם בַּבֹּקֶר, נוֹעֵל נַעֲלַיִם", 6.88, 9.96],
+            ["הַיּוֹם הוּא עוֹלֶה אֶל יְרוּשָׁלַיִם!", 9.96, 13.18],
+            ["תֻּפִּים וְחָלִיל וְשִׁיר שֶׁסּוֹחֵף", 13.18, 16.56],
+            ["כֻּלָּם בַּדֶּרֶךְ, אֵיזֶה כֵּיף!", 16.56, 19.85],
+
+            ["עוֹלִים, עוֹלִים לְבֵית הַמִּקְדָּשׁ", 19.88, 23.22],
+            ["דָּוִד שָׂמֵחַ, הַלֵּב מְרֻגָּשׁ!", 23.22, 26.58],
+            ["שִׁיר רִקּוּד וּתְשׁוּאוֹת", 26.58, 29.92],
+            ["עוֹלִים לִרְאוֹת אֶת הַפְּלָאוֹת!", 29.92, 33.22],
+
+            ["הָרֵי יְרוּשָׁלַיִם כֹּה מְאִירִים", 33.26, 36.48],
+            ["הַכֹּהֲנִים בַּקֹּדֶשׁ עוֹמְדִים וְשָׁרִים", 36.48, 39.64],
+            ["דָּוִד מְנוֹפֵף בְּיָד קְטַנָּה", 39.64, 42.9],
+            ["“שָׁלוֹם, מִקְדָּשׁ, בָּאתִי הֵנָּה!”", 42.9, 46.4],
+
+            ["עוֹלִים, עוֹלִים לְבֵית הַמִּקְדָּשׁ", 46.42, 49.92],
+            ["דָּוִד שָׂמֵחַ, הַלֵּב מְרֻגָּשׁ!", 49.92, 53.26],
+            ["שִׁיר רִקּוּד וּתְשׁוּאוֹת", 53.26, 56.62],
+            ["עוֹלִים לִרְאוֹת אֶת הַפְּלָאוֹת!", 56.62, 59.9],
+
+            ["בִּכּוּרִים בַּסַּל, תְּאֵנָה וַעֲנָבִים", 59.94, 63.36],
+            ["פֵּרוֹת מְתוּקִים שֶׁכֻּלָּם אוֹהֲבִים", 63.36, 66.6],
+            ["הַשֶּׁמֶשׁ זוֹרַחַת, כֻּלָּם שְׂמֵחִים", 66.6, 69.84],
+            ["יַחַד בַּמִּקְדָּשׁ – כֻּלָּנוּ אַחִים!", 69.84, 73.22],
+
+            ["עוֹלִים, עוֹלִים לְבֵית הַמִּקְדָּשׁ", 73.26, 76.6],
+            ["דָּוִד שָׂמֵחַ, הַלֵּב מְרֻגָּשׁ!", 76.6, 79.9],
+            ["שִׁיר רִקּוּד וּתְשׁוּאוֹת", 79.9, 83.3],
+            ["עוֹלִים לִרְאוֹת אֶת הַפְּלָאוֹת!", 83.3, 86.55],
+
+            ["לַ-לַ-לַ-לַ, דָּוִד שָׁר", 88.94, 90.9],
+            ["עוֹלֶה לָרֶגֶל, אֵיזֶה נֶהְדָּר!", 90.9, 93.3],
+            ["לַ-לַ-לַ-לַ, דָּוִד שָׁר", 95.62, 96.9],
+            ["עוֹלֶה לָרֶגֶל, אֵיזֶה נֶהְדָּר!", 96.9, 99.9],
+          ];
+
+          var tl = gsap.timeline({ paused: true });
+
+          /* scene layers + ken burns */
+          SCENES.forEach(function (s, i) {
+            var id = "#" + s[0];
+            var start = s[1],
+              end = s[2];
+            var img = id + " .kb";
+            var k = KB[i];
+            // crossfade in
+            tl.fromTo(id, { opacity: 0 }, { opacity: 1, duration: 0.7, ease: "power1.inOut" }, start);
+            // ken burns across the whole visible span
+            tl.fromTo(
+              img,
+              { scale: k[0], x: k[1], y: k[2] },
+              { scale: k[3], x: k[4], y: k[5], duration: end - start, ease: "none" },
+              start,
+            );
+            // crossfade out (all but last)
+            if (i < SCENES.length - 1) {
+              tl.to(id, { opacity: 0, duration: 0.7, ease: "power1.inOut" }, end - 0.7);
+            }
+          });
+
+          /* title card */
+          tl.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.2);
+          tl.fromTo(
+            "#title h1",
+            { scale: 0.8, y: 30 },
+            { scale: 1, y: 0, duration: 0.9, ease: "back.out(1.7)" },
+            0.3,
+          );
+          tl.to("#title", { opacity: 0, duration: 0.6, ease: "power2.in" }, 6.0);
+
+          /* captions */
+          var caps = document.getElementById("caps");
+          GROUPS.forEach(function (g, i) {
+            var el = document.createElement("div");
+            el.className = "cap";
+            el.id = "cg-" + i;
+            el.textContent = g[0];
+            caps.appendChild(el);
+            var s = g[1],
+              e = g[2];
+            tl.fromTo(
+              "#cg-" + i,
+              { opacity: 0, y: 36, scale: 0.9 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: "back.out(1.6)" },
+              s,
+            );
+            tl.to("#cg-" + i, { opacity: 0, scale: 0.96, duration: 0.18, ease: "power2.in" }, e - 0.18);
+            tl.set("#cg-" + i, { opacity: 0, visibility: "hidden" }, e);
+          });
+
+          /* floating music notes — gentle deterministic drift */
+          var NOTES = [
+            ["#n0", 120, 9, 1500, -60, 0.5],
+            ["#n1", 820, 11, 1500, 80, 0.62],
+            ["#n2", 470, 10, 1500, -40, 0.42],
+            ["#n3", 300, 13, 1500, 60, 0.55],
+            ["#n4", 700, 12, 1500, -70, 0.48],
+          ];
+          NOTES.forEach(function (n) {
+            var sel = n[0],
+              x0 = n[1],
+              dur = n[2],
+              yStart = n[3],
+              drift = n[4],
+              op = n[5];
+            gsap.set(sel, { x: x0, y: yStart, opacity: 0, rotation: -8 });
+            var cycles = Math.floor((DUR - 1.0) / dur);
+            var t = gsap.timeline({ repeat: Math.max(0, cycles - 1) });
+            t.to(sel, { opacity: op, duration: 1.2 }, 0)
+              .to(sel, { y: -180, duration: dur, ease: "none" }, 0)
+              .to(sel, { x: x0 + drift, rotation: 10, duration: dur / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0)
+              .to(sel, { opacity: 0, duration: 1.2 }, dur - 1.2);
+            tl.add(t, 1.0);
+          });
+
+          /* sentinel to full duration */
+          tl.set({}, {}, DUR);
+
+          /* self-lint: warn if any caption still visible after its end */
+          GROUPS.forEach(function (g, i) {
+            var el = document.getElementById("cg-" + i);
+            if (!el) return;
+            tl.seek(g[2] + 0.02);
+            var c = window.getComputedStyle(el);
+            if (c.opacity !== "0" && c.visibility !== "hidden") {
+              console.warn("[caption-lint] group " + i + " visible at " + (g[2] + 0.02).toFixed(2));
+            }
+          });
+          tl.seek(0);
+
+          window.__timelines = window.__timelines || {};
+          window.__timelines["david-pilgrimage"] = tl;
+        })();
+      </script>
+    </div>
+  </body>
+</html>

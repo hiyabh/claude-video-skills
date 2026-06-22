@@ -1,0 +1,60 @@
+<!doctype html>
+<html data-composition-variables='[
+  {"id":"word","type":"string","label":"Big word behind the subject","default":"40"},
+  {"id":"top","type":"number","label":"Top position percent","default":16}
+]'>
+<head><meta charset="utf-8"></head>
+<body style="background: transparent;">
+  <div data-composition-id="behind" data-width="576" data-height="1024" data-start="0" data-duration="10.0">
+    <style>
+      @font-face { font-family: 'Heebo'; src: url('../fonts/heebo-hebrew.woff2') format('woff2'); font-weight: 400 900; unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+      @font-face { font-family: 'Heebo'; src: url('../fonts/heebo-latin.woff2') format('woff2'); font-weight: 400 900; }
+      @font-face { font-family: 'Secular One'; src: url('../fonts/secularone-hebrew.woff2') format('woff2'); unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+      @font-face { font-family: 'Secular One'; src: url('../fonts/secularone-latin.woff2') format('woff2'); }
+      [data-composition-id="behind"] {
+        position: relative;
+        overflow: hidden;
+        background: transparent;
+        font-family: 'Secular One', 'Heebo', sans-serif;
+        direction: rtl;
+      }
+      .word {
+        position: absolute;
+        left: 50%;
+        width: 100%;
+        text-align: center;
+        font-size: 130px;
+        line-height: 1.05;
+        color: #F6C453;
+        text-shadow:
+          0 0 34px rgba(246, 196, 83, 0.65),
+          0 4px 18px rgba(0, 0, 0, 0.55);
+        white-space: nowrap;
+      }
+    </style>
+
+    <div class="word" id="word"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const vars = window.__hyperframes.getVariables();
+      const el = document.getElementById("word");
+      el.textContent = vars.word;
+      el.style.top = vars.top + "%";
+      el.style.transform = "translateX(-50%)";
+      // fit very long words
+      if (vars.word.length > 7) { el.style.fontSize = "92px"; }
+
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#word", { opacity: 0, scale: 1.45, duration: 0.7, ease: "expo.out" }, 0.25);
+      tl.to("#word", { scale: 1.12, y: -14, duration: 9.0, ease: "none" }, 0.95);
+      tl.to("#word", {
+        textShadow: "0 0 60px rgba(246,196,83,0.95), 0 4px 18px rgba(0,0,0,0.55)",
+        duration: 1.4, ease: "sine.inOut", repeat: 5, yoyo: true
+      }, 1.0);
+      window.__timelines["behind"] = tl;
+    </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+{
+  "name": "claude-video-skills",
+  "title": "ערכת סקילי וידאו ל-Claude Code — בין קודש לקלוד",
+  "version": "1.0.0",
+  "count": 27,
+  "install_path": "~/.claude/skills/",
+  "skills": [
+    {
+      "name": "epic-video-studio",
+      "category": "core",
+      "description": "Produce a high-end, wow-factor custom video by orchestrating THREE engines together — HyperFrames (the compositor: kinetic text, titles, captions, transitions, audio, final MP4 render), Manim (math/concept/explainer animations rendered t..."
+    },
+    {
+      "name": "hyperframes",
+      "category": "core",
+      "description": "Create video compositions, animations, title cards, overlays, captions, voiceovers, audio-reactive visuals, and scene transitions in HyperFrames HTML. Use when asked to build any HTML-based video content, add captions or subtitles synced..."
+    },
+    {
+      "name": "hyperframes-cli",
+      "category": "core",
+      "description": "HyperFrames CLI dev loop — `npx hyperframes` for scaffolding (init), validation (lint, inspect), preview, render, and environment troubleshooting (doctor, browser, info, upgrade). Use when running any of these commands or troubleshooting..."
+    },
+    {
+      "name": "hyperframes-media",
+      "category": "core",
+      "description": "Asset preprocessing for HyperFrames compositions — text-to-speech narration (Kokoro), audio/video transcription (Whisper), and background removal for transparent overlays (u2net). Use when generating voiceover from text, transcribing spe..."
+    },
+    {
+      "name": "hyperframes-registry",
+      "category": "core",
+      "description": "Install and wire registry blocks and components into HyperFrames compositions. Use when running hyperframes add, installing a block or component, wiring an installed item into index.html, or working with hyperframes.json. Covers the add..."
+    },
+    {
+      "name": "event-recap-video",
+      "category": "core",
+      "description": "Produce professional event-recap montage videos from raw photos+clips. TRIGGER on Hebrew: 'סרטון סיכום', 'סרטון של האירוע', 'סרטון מהאירוע', 'ערוך סרטון מהחומרים', 'סרטון מהתמונות', 'סרטון מהקליפים', 'סרטון לאירוע', 'תסכם באירוע בסרטון'...."
+    },
+    {
+      "name": "kids-song-video",
+      "category": "core",
+      "description": ">- Create a personalized animated children's song music video with AI — kid picks a topic, Claude writes Hebrew lyrics (with niqqud), the user generates a sung track in Suno, Claude auto-generates a consistent character (optionally from..."
+    },
+    {
+      "name": "blessing-video-weaver",
+      "category": "core",
+      "description": "Produce a full greeting/blessing compilation video (birthday, anniversary, farewell, bar/bat mitzvah) from a folder of raw self-recorded clips — one clip per person. Transcribes everything (Hebrew Whisper), writes a thematic weaving scri..."
+    },
+    {
+      "name": "dvar-torah-animation",
+      "category": "core",
+      "description": ">- Turn a written or recorded Torah-thought / drasha (parsha insight, mussar talk, holiday sermon) into a finished, animated 9:16 social video — Hebrew TTS or supplied narration, per-word niqqud karaoke captions synced with Whisper, a fa..."
+    },
+    {
+      "name": "face-track-reframe",
+      "category": "core",
+      "description": "Reframe/crop a video to a different aspect ratio while keeping the speaker's face centered and never cut off, using dynamic face tracking. The crop window follows the face across the whole clip (handles a person who moves within the fram..."
+    },
+    {
+      "name": "website-to-hyperframes",
+      "category": "core",
+      "description": "| Capture a website and create a HyperFrames video from it. Use when: (1) a user provides a URL and wants a video, (2) someone says \"capture this site\", \"turn this into a video\", \"make a promo from my site\", (3) the user wants a social a..."
+    },
+    {
+      "name": "manim-skill",
+      "category": "animation",
+      "description": "Create mathematical animations with Manim Community Edition(manimce). Generates distinctive, production-grade animations that avoid generic \"AI slop\" aesthetics. Use when user wants to animate concepts, equations, illustrate proofs, visu..."
+    },
+    {
+      "name": "manim-composer",
+      "category": "animation",
+      "description": "| Trigger when: (1) User wants to create an educational/explainer video, (2) User has a vague concept they want visualized, (3) User mentions \"3b1b style\" or \"explain like 3Blue1Brown\", (4) User wants to plan a Manim video or animation s..."
+    },
+    {
+      "name": "manimce-best-practices",
+      "category": "animation",
+      "description": "| Trigger when: (1) User mentions \"manim\" or \"Manim Community\" or \"ManimCE\", (2) Code contains `from manim import *`, (3) User runs `manim` CLI commands, (4) Working with Scene, MathTex, Create(), or ManimCE-specific classes. Best practi..."
+    },
+    {
+      "name": "text-to-lottie",
+      "category": "animation",
+      "description": "Author a Lottie (Bodymovin) JSON animation that renders in a local skia player. Use whenever the user asks to create, generate, edit, or fix a Lottie animation, or asks for \"an animation\" to load."
+    },
+    {
+      "name": "lottie",
+      "category": "animation",
+      "description": "Lottie and dotLottie adapter patterns for HyperFrames. Use when embedding lottie-web JSON animations, .lottie files, @lottiefiles/dotlottie-web players, registering instances on window.__hfLottie, or making After Effects exports determin..."
+    },
+    {
+      "name": "remotion-best-practices",
+      "category": "animation",
+      "description": "Best practices for Remotion - Video creation in React"
+    },
+    {
+      "name": "remotion-to-hyperframes",
+      "category": "animation",
+      "description": "Translate an existing Remotion (React-based) video composition into a HyperFrames HTML composition. Use ONLY when the user explicitly asks to port, convert, migrate, translate, or rewrite a Remotion composition as HyperFrames (e.g. \"port..."
+    },
+    {
+      "name": "animejs",
+      "category": "animation",
+      "description": "Anime.js adapter patterns for HyperFrames. Use when writing Anime.js animations or timelines inside HyperFrames compositions, registering animations on window.__hfAnime, making Anime.js seek-driven and deterministic, or translating Anime..."
+    },
+    {
+      "name": "gsap",
+      "category": "animation",
+      "description": "GSAP animation reference for HyperFrames. Covers gsap.to(), from(), fromTo(), easing, stagger, defaults, timelines (gsap.timeline(), position parameter, labels, nesting, playback), and performance (transforms, will-change, quickTo). Use..."
+    },
+    {
+      "name": "css-animations",
+      "category": "animation",
+      "description": "CSS animation adapter patterns for HyperFrames. Use when authoring CSS keyframes, animation-delay based timing, animation-fill-mode, animation-play-state, or CSS-only motion that HyperFrames must seek deterministically during preview and..."
+    },
+    {
+      "name": "framer-motion",
+      "category": "animation",
+      "description": "Framer Motion patterns for React UI animation — `motion` components, `AnimatePresence`, `layout` animations, `useScroll`/`useTransform`, gestures, variants, and orchestration. Use when adding entrance/exit, page transitions, scroll-linke..."
+    },
+    {
+      "name": "three",
+      "category": "animation",
+      "description": "Three.js and WebGL adapter patterns for HyperFrames. Use when creating deterministic Three.js scenes, WebGL canvas layers, AnimationMixer timelines, camera motion, shader-driven visuals, or canvas renders that respond to HyperFrames hf-s..."
+    },
+    {
+      "name": "waapi",
+      "category": "animation",
+      "description": "Web Animations API adapter patterns for HyperFrames. Use when authoring element.animate() motion, Animation currentTime seeking, document.getAnimations(), KeyframeEffect timing, fill modes, or native browser animations that must render d..."
+    },
+    {
+      "name": "threejs-scroll-cinema",
+      "category": "animation",
+      "description": "Build scroll-based cinematic 3D scenes with Three.js + GSAP ScrollTrigger. Covers camera animation, depth/parallax via layered images or meshes, lighting, easing, and scene-stitching. Use when user wants WebGL hero sections, immersive pr..."
+    },
+    {
+      "name": "universal-downloader",
+      "category": "download",
+      "description": "Download any content from any website — videos (YouTube, Vimeo, TikTok, Twitter/X, Instagram, Facebook, Twitch, 1000+ sites via yt-dlp), audio/music, image galleries (via gallery-dl), single files (curl), playlists, subtitles, live strea..."
+    },
+    {
+      "name": "browser-album-downloader",
+      "category": "download",
+      "description": "Download photo/media albums from sites that require login and cannot be scraped with yt-dlp/gallery-dl/curl. Opens a real Chromium browser via Playwright, lets the user log in manually (Claude never sees credentials), then walks the albu..."
+    }
+  ]
+}

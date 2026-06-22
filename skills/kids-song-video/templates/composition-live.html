@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="he">
+  <head>
+    <meta charset="utf-8" />
+    <script src="gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rubik";
+        font-weight: 500;
+        src: url("fonts/rubik-500.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Rubik";
+        font-weight: 700;
+        src: url("fonts/rubik-700.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Rubik";
+        font-weight: 900;
+        src: url("fonts/rubik-900.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Suez One";
+        font-weight: 400;
+        src: url("fonts/suez.woff2") format("woff2");
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      #comp {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: #f4e4c5;
+        font-family: "Rubik", sans-serif;
+      }
+      #bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+      }
+      /* bottom scrim for caption legibility */
+      #scrim {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 620px;
+        z-index: 20;
+        background: linear-gradient(
+          to top,
+          rgba(40, 22, 8, 0.62) 0%,
+          rgba(40, 22, 8, 0.34) 42%,
+          rgba(40, 22, 8, 0) 100%
+        );
+        pointer-events: none;
+      }
+      /* captions */
+      #caps {
+        position: absolute;
+        left: 40px;
+        right: 40px;
+        bottom: 250px;
+        z-index: 40;
+        text-align: center;
+        direction: rtl;
+      }
+      .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        direction: rtl;
+        unicode-bidi: isolate;
+        font-family: "Rubik", sans-serif;
+        font-weight: 900;
+        font-size: 78px;
+        line-height: 1.25;
+        color: #fff7e8;
+        text-shadow:
+          0 0 4px rgba(60, 30, 0, 0.9),
+          4px 4px 0 #5a2d00,
+          -2px -2px 0 #5a2d00,
+          2px -2px 0 #5a2d00,
+          -2px 2px 0 #5a2d00,
+          0 8px 22px rgba(0, 0, 0, 0.45);
+      }
+      /* title card */
+      #title {
+        position: absolute;
+        inset: 0;
+        z-index: 60;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 210px;
+        gap: 28px;
+        opacity: 0;
+      }
+      #title .halo {
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1000px;
+        height: 1000px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 235, 170, 0.55) 0%, rgba(255, 235, 170, 0) 62%);
+      }
+      #title h1 {
+        position: relative;
+        font-family: "Suez One", serif;
+        font-size: 124px;
+        color: #fff;
+        text-align: center;
+        direction: rtl;
+        line-height: 1.1;
+        padding: 0 60px;
+        text-shadow:
+          5px 5px 0 #b5651d,
+          -3px -3px 0 #b5651d,
+          0 14px 36px rgba(0, 0, 0, 0.4);
+      }
+      #title .sub {
+        position: relative;
+        font-family: "Rubik", sans-serif;
+        font-weight: 700;
+        font-size: 56px;
+        color: #fff3d6;
+        direction: rtl;
+        text-shadow: 3px 3px 0 #b5651d, 0 8px 20px rgba(0, 0, 0, 0.35);
+      }
+      /* floating music notes */
+      .note {
+        position: absolute;
+        z-index: 30;
+        font-size: 90px;
+        color: #fff;
+        opacity: 0;
+        text-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+        will-change: transform, opacity;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="comp"
+      data-composition-id="david-pilgrimage"
+      data-start="0"
+      data-duration="94.08"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- master audio -->
+      <audio
+        id="song"
+        data-start="0"
+        data-duration="94.08"
+        data-track-index="0"
+        src="assets/song.mp3"
+      ></audio>
+
+      <!-- live background video (the chained Veo clips) -->
+      <video
+        id="bg"
+        class="clip"
+        data-start="0"
+        data-duration="94.08"
+        data-media-start="0"
+        data-track-index="1"
+        src="assets/background.mp4"
+        muted
+        playsinline
+      ></video>
+
+      <div id="scrim"></div>
+
+      <!-- floating notes -->
+      <div class="note" id="n0">♪</div>
+      <div class="note" id="n1">♫</div>
+      <div class="note" id="n2">♬</div>
+      <div class="note" id="n3">♪</div>
+      <div class="note" id="n4">♩</div>
+
+      <!-- captions -->
+      <div id="caps"></div>
+
+      <!-- title card -->
+      <div id="title">
+        <div class="halo"></div>
+        <h1>דָּוִד עוֹלֶה לָרֶגֶל</h1>
+        <div class="sub">שיר מצויר לילדים 🎶</div>
+      </div>
+
+      <script>
+        (function () {
+          var DUR = 94.08;
+
+          /* ---- caption groups: [text, start, end] (niqqud lyrics) ---- */
+          /* timings already shifted by -6.80s (Suno intro trimmed) */
+          var GROUPS = [
+            ["דָּוִד קָם בַּבֹּקֶר, נוֹעֵל נַעֲלַיִם", 0.08, 3.16],
+            ["הַיּוֹם הוּא עוֹלֶה אֶל יְרוּשָׁלַיִם!", 3.16, 6.38],
+            ["תֻּפִּים וְחָלִיל וְשִׁיר שֶׁסּוֹחֵף", 6.38, 9.76],
+            ["כֻּלָּם בַּדֶּרֶךְ, אֵיזֶה כֵּיף!", 9.76, 13.05],
+
+            ["עוֹלִים, עוֹלִים לְבֵית הַמִּקְדָּשׁ", 13.08, 16.42],
+            ["דָּוִד שָׂמֵחַ, הַלֵּב מְרֻגָּשׁ!", 16.42, 19.78],
+            ["שִׁיר רִקּוּד וּתְשׁוּאוֹת", 19.78, 23.12],
+            ["עוֹלִים לִרְאוֹת אֶת הַפְּלָאוֹת!", 23.12, 26.42],
+
+            ["הָרֵי יְרוּשָׁלַיִם כֹּה מְאִירִים", 26.46, 29.68],
+            ["הַכֹּהֲנִים בַּקֹּדֶשׁ עוֹמְדִים וְשָׁרִים", 29.68, 32.84],
+            ["דָּוִד מְנוֹפֵף בְּיָד קְטַנָּה", 32.84, 36.1],
+            ["“שָׁלוֹם, מִקְדָּשׁ, בָּאתִי הֵנָּה!”", 36.1, 39.6],
+
+            ["עוֹלִים, עוֹלִים לְבֵית הַמִּקְדָּשׁ", 39.62, 43.12],
+            ["דָּוִד שָׂמֵחַ, הַלֵּב מְרֻגָּשׁ!", 43.12, 46.46],
+            ["שִׁיר רִקּוּד וּתְשׁוּאוֹת", 46.46, 49.82],
+            ["עוֹלִים לִרְאוֹת אֶת הַפְּלָאוֹת!", 49.82, 53.1],
+
+            ["בִּכּוּרִים בַּסַּל, תְּאֵנָה וַעֲנָבִים", 53.14, 56.56],
+            ["פֵּרוֹת מְתוּקִים שֶׁכֻּלָּם אוֹהֲבִים", 56.56, 59.8],
+            ["הַשֶּׁמֶשׁ זוֹרַחַת, כֻּלָּם שְׂמֵחִים", 59.8, 63.04],
+            ["יַחַד בַּמִּקְדָּשׁ – כֻּלָּנוּ אַחִים!", 63.04, 66.42],
+
+            ["עוֹלִים, עוֹלִים לְבֵית הַמִּקְדָּשׁ", 66.46, 69.8],
+            ["דָּוִד שָׂמֵחַ, הַלֵּב מְרֻגָּשׁ!", 69.8, 73.1],
+            ["שִׁיר רִקּוּד וּתְשׁוּאוֹת", 73.1, 76.5],
+            ["עוֹלִים לִרְאוֹת אֶת הַפְּלָאוֹת!", 76.5, 79.75],
+
+            ["לַ-לַ-לַ-לַ, דָּוִד שָׁר", 82.14, 84.1],
+            ["עוֹלֶה לָרֶגֶל, אֵיזֶה נֶהְדָּר!", 84.1, 86.5],
+            ["לַ-לַ-לַ-לַ, דָּוִד שָׁר", 88.82, 90.1],
+            ["עוֹלֶה לָרֶגֶל, אֵיזֶה נֶהְדָּר!", 90.1, 93.1],
+          ];
+
+          var tl = gsap.timeline({ paused: true });
+
+          /* title card */
+          tl.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.2);
+          tl.fromTo(
+            "#title h1",
+            { scale: 0.8, y: 30 },
+            { scale: 1, y: 0, duration: 0.9, ease: "back.out(1.7)" },
+            0.3,
+          );
+          tl.to("#title", { opacity: 0, duration: 0.6, ease: "power2.in" }, 3.6);
+
+          /* captions */
+          var caps = document.getElementById("caps");
+          GROUPS.forEach(function (g, i) {
+            var el = document.createElement("div");
+            el.className = "cap";
+            el.id = "cg-" + i;
+            el.textContent = g[0];
+            caps.appendChild(el);
+            var s = g[1],
+              e = g[2];
+            tl.fromTo(
+              "#cg-" + i,
+              { opacity: 0, y: 36, scale: 0.9 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: "back.out(1.6)" },
+              s,
+            );
+            tl.to("#cg-" + i, { opacity: 0, scale: 0.96, duration: 0.18, ease: "power2.in" }, e - 0.18);
+            tl.set("#cg-" + i, { opacity: 0, visibility: "hidden" }, e);
+          });
+
+          /* floating music notes — gentle deterministic drift */
+          var NOTES = [
+            ["#n0", 120, 9, 1500, -60, 0.5],
+            ["#n1", 820, 11, 1500, 80, 0.62],
+            ["#n2", 470, 10, 1500, -40, 0.42],
+            ["#n3", 300, 13, 1500, 60, 0.55],
+            ["#n4", 700, 12, 1500, -70, 0.48],
+          ];
+          NOTES.forEach(function (n) {
+            var sel = n[0],
+              x0 = n[1],
+              dur = n[2],
+              yStart = n[3],
+              drift = n[4],
+              op = n[5];
+            gsap.set(sel, { x: x0, y: yStart, opacity: 0, rotation: -8 });
+            var cycles = Math.floor((DUR - 1.0) / dur);
+            var t = gsap.timeline({ repeat: Math.max(0, cycles - 1) });
+            t.to(sel, { opacity: op, duration: 1.2 }, 0)
+              .to(sel, { y: -180, duration: dur, ease: "none" }, 0)
+              .to(sel, { x: x0 + drift, rotation: 10, duration: dur / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0)
+              .to(sel, { opacity: 0, duration: 1.2 }, dur - 1.2);
+            tl.add(t, 1.0);
+          });
+
+          /* sentinel to full duration */
+          tl.set({}, {}, DUR);
+
+          window.__timelines = window.__timelines || {};
+          window.__timelines["david-pilgrimage"] = tl;
+        })();
+      </script>
+    </div>
+  </body>
+</html>

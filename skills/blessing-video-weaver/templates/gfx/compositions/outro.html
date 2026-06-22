@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+  <div data-composition-id="outro" data-width="576" data-height="1024" data-start="0" data-duration="9.0">
+    <style>
+      @font-face { font-family: 'Heebo'; src: url('../fonts/heebo-hebrew.woff2') format('woff2'); font-weight: 400 900; unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+      @font-face { font-family: 'Heebo'; src: url('../fonts/heebo-latin.woff2') format('woff2'); font-weight: 400 900; }
+      @font-face { font-family: 'Secular One'; src: url('../fonts/secularone-hebrew.woff2') format('woff2'); unicode-range: U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+      @font-face { font-family: 'Secular One'; src: url('../fonts/secularone-latin.woff2') format('woff2'); }
+      [data-composition-id="outro"] {
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(ellipse 120% 80% at 50% 36%, #2A1850 0%, #1C1238 55%, #160D2B 100%);
+        font-family: 'Heebo', sans-serif;
+        direction: rtl;
+      }
+      .stage {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        padding: 70px 40px;
+        box-sizing: border-box;
+        text-align: center;
+      }
+      .mazal {
+        font-family: 'Secular One', 'Heebo', sans-serif;
+        font-size: 84px;
+        line-height: 1.1;
+        color: #F6C453;
+        text-shadow: 0 0 50px rgba(246, 196, 83, 0.45);
+      }
+      .name {
+        font-family: 'Secular One', 'Heebo', sans-serif;
+        font-size: 120px;
+        line-height: 1.05;
+        color: #FFF8EC;
+        text-shadow: 0 0 60px rgba(159, 122, 234, 0.55);
+      }
+      .love {
+        font-size: 33px;
+        font-weight: 600;
+        color: #FF8FB1;
+        margin-top: 6px;
+      }
+      .names {
+        margin-top: 22px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 14px;
+        max-width: 460px;
+      }
+      .sib {
+        font-size: 25px;
+        font-weight: 500;
+        color: rgba(255, 248, 236, 0.88);
+        background: rgba(159, 122, 234, 0.16);
+        border: 1px solid rgba(246, 196, 83, 0.35);
+        border-radius: 30px;
+        padding: 7px 20px;
+      }
+      .heart {
+        margin-top: 20px;
+        font-size: 60px;
+        line-height: 1;
+        color: #FF8FB1;
+        text-shadow: 0 0 30px rgba(255, 143, 177, 0.7);
+      }
+      .confetti {
+        position: absolute;
+        z-index: 2;
+        top: -40px;
+        border-radius: 3px;
+        will-change: transform;
+      }
+      .glow {
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        top: 44%;
+        width: 560px;
+        height: 560px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(255, 143, 177, 0.14) 0%, transparent 62%);
+      }
+    </style>
+
+    <div class="glow"></div>
+    <div id="confetti-layer"></div>
+    <div class="stage">
+      <div class="mazal" id="mazal">מזל טוב</div>
+      <div class="name" id="oname">אמונה!</div>
+      <div class="love" id="love">אוהבים אותך עד אינסוף</div>
+      <div class="names" id="names"></div>
+      <div class="heart" id="heart">❤</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = (a + 0x6D2B79F5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const rand = mulberry32(2026);
+      const COLORS = ["#F6C453", "#FF8FB1", "#9F7AEA", "#FFE08A", "#FFF8EC"];
+      const layer = document.getElementById("confetti-layer");
+      const pieces = [];
+      const N_CONFETTI = 34;
+      for (let i = 0; i < N_CONFETTI; i++) {
+        const el = document.createElement("div");
+        el.className = "confetti";
+        const w = 7 + rand() * 9;
+        el.style.width = w + "px";
+        el.style.height = w * (0.55 + rand() * 0.9) + "px";
+        el.style.left = (rand() * 100) + "%";
+        el.style.background = COLORS[Math.floor(rand() * COLORS.length)];
+        layer.appendChild(el);
+        pieces.push(el);
+      }
+
+      const SIBLINGS = ["אורי", "יוסי", "עומר", "שירה", "דוד", "איתן", "רוני", "תמר", "מאיה", "נועה", "ליאת"];
+      const namesEl = document.getElementById("names");
+      SIBLINGS.forEach(n => {
+        const s = document.createElement("div");
+        s.className = "sib";
+        s.textContent = n;
+        namesEl.appendChild(s);
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#mazal", { y: -50, opacity: 0, duration: 0.7, ease: "back.out(1.9)" }, 0.2);
+      tl.from("#oname", { scale: 0.3, opacity: 0, duration: 0.9, ease: "elastic.out(1, 0.5)" }, 0.55);
+      tl.from("#love", { y: 26, opacity: 0, duration: 0.55, ease: "power2.out" }, 1.2);
+      tl.from(".sib", { y: 30, opacity: 0, scale: 0.7, duration: 0.5, ease: "back.out(2)", stagger: 0.09 }, 1.6);
+      tl.from("#heart", { scale: 0, opacity: 0, duration: 0.65, ease: "elastic.out(1.1, 0.5)" }, 2.6);
+      tl.to("#heart", { scale: 1.18, duration: 0.55, ease: "sine.inOut", repeat: 7, yoyo: true }, 3.3);
+
+      pieces.forEach((el) => {
+        const fallDur = 3.4 + rand() * 2.6;
+        const delay = 0.3 + rand() * 4.0;
+        const drift = (rand() - 0.5) * 130;
+        const spins = 140 + rand() * 420;
+        tl.to(el, { y: 1120, x: drift, rotation: spins, duration: fallDur, ease: "none" }, delay);
+        tl.from(el, { opacity: 0, duration: 0.25, ease: "power1.out" }, delay);
+      });
+
+      // final scene of the whole video — fade to black allowed
+      tl.to(".stage, #confetti-layer, .glow", { opacity: 0, duration: 0.8, ease: "power2.in" }, 8.1);
+      window.__timelines["outro"] = tl;
+    </script>
+  </div>
+</body>
+</html>

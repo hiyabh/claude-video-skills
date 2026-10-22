@@ -1,16 +1,14 @@
 ---
 name: dvar-torah-animation
 description: >-
-  Turn a written or recorded Torah-thought / drasha (parsha insight, mussar talk, holiday
-  sermon) into a finished, animated 9:16 social video — Hebrew TTS or supplied narration,
+  Turn a written or recorded Torah-thought / drasha into a finished, animated 9:16 social video — Hebrew TTS or supplied narration,
   per-word niqqud karaoke captions synced with Whisper, a fast-cut B-roll background of 2D
   illustrations (Google Gemini image) each timed to the exact moment the narrator reaches
   its topic, optional Veo 3.1 live animation, a tempo speed-up pass, and a logo/credit
   endcard — composited in HyperFrames and rendered to MP4 (master + share).
   TRIGGER on Hebrew: 'הנפש דרשה', 'סרטון דבר תורה מונפש', 'תעשה דבר תורה מונפש', 'דרשה מונפשת',
-  'סרטון על הפרשה', 'דבר תורה מצויר', 'הנפשה של דבר תורה', 'סרטון פרשת שבוע', 'תנפיש את הדרשה'.
-  English: 'animated dvar torah', 'animate this sermon', 'parsha video', 'drasha animation',
-  'Torah thought video', 'animated Jewish sermon'. USE THIS when the output is a SPOKEN
+  'סרטון על הפרשה', 'דבר תורה מצויר', 'תנפיש את הדרשה'.
+  English: 'animated dvar torah', 'animate this sermon', 'parsha video', 'drasha animation'. USE THIS when the output is a SPOKEN
   Torah/drasha turned into an animated reel with thematic illustrated B-roll behind narration
   + captions. NOT for a sung song (use kids-song-video), NOT for an event montage
   (use event-recap-video), NOT for generic motion-graphics (use epic-video-studio).

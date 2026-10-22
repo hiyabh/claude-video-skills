@@ -44,7 +44,7 @@ PAIRS = [
 def load_key():
     if os.environ.get("GOOGLE_API_KEY"):
         return os.environ["GOOGLE_API_KEY"]
-    for line in open(os.path.expanduser("~/projects/openmontage/.env"), encoding="utf-8"):
+    for line in open(os.path.expanduser(os.environ.get("GOOGLE_ENV_FILE", ".env")), encoding="utf-8"):
         if line.startswith("GOOGLE_API_KEY="):
             return line.split("=", 1)[1].strip()
     raise RuntimeError("no key")

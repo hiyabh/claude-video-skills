@@ -64,7 +64,7 @@ curl -L https://hiyabh.github.io/claude-video-skills/install.sh | bash
 ### יצירה ועריכה
 - **epic-video-studio** — מנצח על HyperFrames + Manim + Lottie לסרטון "וואו" מורכב
 - **hyperframes** (+`-cli` / `-media` / `-registry`) — מנוע הקומפוזיציה: טקסט קינטי, כתוביות, קריינות, מעברים, רינדור
-- **event-recap-video** — סרטון סיכום אירוע מתמונות+קליפים גולמיים (ffmpeg)
+- **event-recap-video** — סרטון סיכום אירוע מתמונות+קליפים גולמיים (ffmpeg) - מצב דרמטי עם מעברים מונפשים, מיקס מוזיקה, קולאז' פתיחה עם כותרת וסימן מים (לוגו ומוזיקה מספקים בעצמך)
 - **kids-song-video** — קליפ שיר מצויר ומושר לילד (Suno + תמונות AI + אנימציה)
 - **blessing-video-weaver** — שזירת קליפי ברכה מכל המשפחה לסרטון אחד
 - **dvar-torah-animation** — דבר תורה מונפש 9:16 עם כתוביות מנוקדות ו-B-roll מאויר

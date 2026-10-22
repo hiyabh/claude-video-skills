@@ -56,7 +56,7 @@ os.makedirs(OUT_DIR, exist_ok=True)
 def load_key():
     if os.environ.get("GOOGLE_API_KEY"):
         return os.environ["GOOGLE_API_KEY"]
-    env = os.path.expanduser("~/projects/openmontage/.env")
+    env = os.path.expanduser(os.environ.get("GOOGLE_ENV_FILE", ".env"))
     for line in open(env, encoding="utf-8"):
         if line.startswith("GOOGLE_API_KEY="):
             return line.split("=", 1)[1].strip()

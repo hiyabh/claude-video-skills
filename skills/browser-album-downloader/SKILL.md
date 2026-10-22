@@ -127,6 +127,13 @@ IMG_FILTER = lambda src: "googleusercontent.com" in src
 URL_PARAM_FOR_DEDUPE = None  # Google Photos uses path segments not query params
 ```
 
+**Public share link (`photos.app.goo.gl/...`) - no login needed (verified 2026-10-12):** run Playwright
+*headless*, listen to `page.on("response")` for `batchexecute?rpcids=snAcKc`, regex
+`\"(AF1Qip…)\",[\"(https://lh3.googleusercontent.com/pw/…)\",W,H` + 13-digit timestamp, and scroll
+(`End` + `mouse.wheel`) until the count stops growing. The initial HTML holds only ~300 items; never report a
+count from it. `<base_url>=d` = original JPEG, `=w1200-h1200` = thumbnail, `=dv` content-type `video/mp4` flags
+videos.
+
 For Google Photos prefer **Takeout** (`takeout.google.com`) when the user owns the album — it's a one-click ZIP. This skill is for albums *shared with* the user that aren't in Takeout scope.
 
 ### Playbook 3: Instagram private profile / saved posts

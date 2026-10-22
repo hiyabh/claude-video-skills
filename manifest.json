@@ -48,7 +48,7 @@
     {
       "name": "dvar-torah-animation",
       "category": "core",
-      "description": ">- Turn a written or recorded Torah-thought / drasha (parsha insight, mussar talk, holiday sermon) into a finished, animated 9:16 social video — Hebrew TTS or supplied narration, per-word niqqud karaoke captions synced with Whisper, a fa..."
+      "description": ">- Turn a written or recorded Torah-thought / drasha into a finished, animated 9:16 social video — Hebrew TTS or supplied narration, per-word niqqud karaoke captions synced with Whisper, a fa..."
     },
     {
       "name": "face-track-reframe",

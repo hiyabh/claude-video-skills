@@ -6,7 +6,7 @@ See references/image-generation.md for the modesty rules and which frames to eye
 import os, json, base64, time, subprocess, urllib.request, urllib.error
 
 # ---------- CONFIG ----------
-ENV_PATH = os.path.expanduser("~/projects/openmontage/.env")  # fallback; prefer GOOGLE_API_KEY env var
+ENV_PATH = os.environ.get("GOOGLE_ENV_FILE", ".env")  # fallback; prefer GOOGLE_API_KEY env var
 MODEL = "gemini-3-pro-image"
 OUT_DIR = "scenes"
 PREFIX = "scene"          # -> scenes/scene_00.png ; use "extra" for a second batch
@@ -19,7 +19,9 @@ STYLE = (
  "MODESTY (STRICT, non-negotiable): every human is an observant RELIGIOUS-ZIONIST (Dati-Leumi) Jew "
  "dressed fully modestly - men and boys wear a KNITTED KIPPAH (kippah seruga), NOT a chareidi black "
  "hat, beard optional, a long-sleeved shirt with tzitzit; "
- "women have their hair fully covered with a headscarf (tichel), long sleeves to the wrist, a high "
+ "women have their hair covered with a Jewish TICHEL tied in a knot at the BACK of the head - face, chin, "
+ "jawline and neck fully visible; NOT a hijab wrapped around the face or under the chin, NO hood, NO veil, "
+ "nothing Arab or Muslim style (this applies to tiny background figures too); long sleeves to the wrist, a high "
  "neckline, and a long skirt. No immodest clothing, no exposed skin beyond face and hands, no bare "
  "arms or legs, no tight clothing. Reverent, wholesome, family-friendly. "
  "No text, no Hebrew or English letters, no captions, no logos, no watermark.")

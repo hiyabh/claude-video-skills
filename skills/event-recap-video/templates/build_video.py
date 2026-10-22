@@ -13,6 +13,8 @@ TO ADAPT FOR A NEW EVENT:
      across 4 acts (establishing/faces/climax/closing)
   5. Set SPECS for the formats you want (landscape, vertical, or both)
   6. If using a logo card, name the file "logo.png" (ASCII!) at the end of SHOT_LIST
+     — it renders large (70% width) on a BLACK background; the shot before it uses
+     `fadeblack` so it dips to black into the card
   7. Run: python build_video.py
   8. Mux audio with the command in SKILL.md "Music + Video mux command"
 
@@ -38,6 +40,7 @@ os.chdir(BASE_DIR)
 PHOTO_SUFFIX = "_YYYY-MM-DD_HH-MM-SS"
 # Videos already use their full stem in SHOT_LIST, no suffix needed.
 FPS = 30
+PULSE_PERIOD_SEC = 1.5   # "pulse" motion: one heartbeat per period
 INTERMEDIATES_BASE = BASE_DIR / "_intermediates"
 
 SPECS = {
@@ -72,8 +75,8 @@ SHOT_LIST = [
 
     # Act 4 — Hero closing + logo (~9s)
     {"type": "photo", "name": "photo_emotional_close","dur": 3.2, "motion": "zoom_in_slow","trans": "fade",      "td": 0.5},
-    {"type": "photo", "name": "photo_HERO_FINAL",     "dur": 5.5, "motion": "zoom_in_slow","trans": "fadewhite", "td": 0.7},  # the iconic image
-    {"type": "logo",  "name": "logo.png", "dur": 2.0,                                     "trans": "fadeblack", "td": 1.5},
+    {"type": "photo", "name": "photo_HERO_FINAL",     "dur": 5.5, "motion": "zoom_in_slow","trans": "fadeblack", "td": 0.7},  # iconic image, dips to black into logo
+    {"type": "logo",  "name": "logo.png", "dur": 2.2,                                     "trans": "fadeblack", "td": 1.5},
 ]
 
 
@@ -98,14 +101,26 @@ def get_dim(rel_path):
     return int(parts[0]), int(parts[1])
 
 
-def zoompan_expr(motion, frames):
+def zoompan_expr(motion, frames, fx=0.5, fy=0.5):
     """Return (z_expr, x_expr, y_expr) for the given motion."""
     f = frames
+    if motion == "zoom_to":
+        # Zoom toward a specific point (fx, fy) — fractions of the frame.
+        # Use on a dedicated 9:16 crop of the subject, NOT on a blur-padded
+        # photo (the zoom window hits the blur bands). See SKILL.md lesson.
+        return ("min(1.0+0.30*on/{f},1.30)".format(f=f),
+                "max(0,min({fx}*iw-(iw/zoom)/2,iw-iw/zoom))".format(fx=fx),
+                "max(0,min({fy}*ih-(ih/zoom)/2,ih-ih/zoom))".format(fy=fy))
     if motion == "zoom_in":
         return ("min(1.0+0.15*on/{f},1.15)".format(f=f),
                 "iw/2-(iw/zoom/2)", "ih/2-(ih/zoom/2)")
     if motion == "zoom_in_slow":
         return ("min(1.0+0.08*on/{f},1.08)".format(f=f),
+                "iw/2-(iw/zoom/2)", "ih/2-(ih/zoom/2)")
+    if motion == "pulse":
+        # Heartbeat: a quick swell every PULSE_PERIOD_SEC that decays slowly.
+        p = PULSE_PERIOD_SEC
+        return ("1.06+0.07*exp(-6*mod(on/{fps},{p})/{p})".format(fps=FPS, p=p),
                 "iw/2-(iw/zoom/2)", "ih/2-(ih/zoom/2)")
     if motion == "zoom_out":
         return ("max(1.15-0.15*on/{f},1.0)".format(f=f),
@@ -125,7 +140,7 @@ def zoompan_expr(motion, frames):
     return ("1.0", "iw/2-(iw/zoom/2)", "ih/2-(ih/zoom/2)")
 
 
-def build_photo_filter(motion, dur, src_dim, dst):
+def build_photo_filter(motion, dur, src_dim, dst, fx=0.5, fy=0.5):
     """Filter graph for a photo shot."""
     sw, sh = src_dim
     dw, dh = dst
@@ -133,7 +148,7 @@ def build_photo_filter(motion, dur, src_dim, dst):
     dst_ar = dw / dh
     same_orient = abs(src_ar - dst_ar) / dst_ar < 0.10
     frames = int(round(dur * FPS))
-    zexp, xexp, yexp = zoompan_expr(motion, frames)
+    zexp, xexp, yexp = zoompan_expr(motion, frames, fx, fy)
 
     if same_orient:
         # Pre-scale large for smooth zoompan, then crop, then zoompan back to target
@@ -181,12 +196,17 @@ def render_intermediate(shot, idx, dst, out_rel_dir):
     name = shot["name"]
     dw, dh = dst
     if shot["type"] == "logo":
-        # White background card with logo centered, no motion
+        # Black background card with a large logo centered, no motion.
+        # Black bg blends seamlessly with the final fade-to-black; the preceding
+        # shot should use a `fadeblack` transition (NOT fadewhite) into this card.
         dur = shot["dur"]
-        logo_target_w = int(dw * 0.45)
+        # Proportional logo (user directive 2026-07-14): cap by BOTH width and
+        # height so a round/tall logo never clips outside the frame.
+        # 62% of frame width, but never taller than ~40% of frame height.
+        logo_target_w = min(int(dw * 0.62), int(dh * 0.40))
         cmd = [
             "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-f", "lavfi", "-t", f"{dur}", "-i", f"color=c=white:s={dw}x{dh}:r={FPS}",
+            "-f", "lavfi", "-t", f"{dur}", "-i", f"color=c=black:s={dw}x{dh}:r={FPS}",
             "-loop", "1", "-t", f"{dur}", "-i", name,
             "-filter_complex",
             f"[1:v]scale={logo_target_w}:-1:flags=lanczos[logo];"
@@ -200,10 +220,14 @@ def render_intermediate(shot, idx, dst, out_rel_dir):
         run(cmd)
         return out_path
     if shot["type"] == "photo":
-        src = f"{name}{PHOTO_SUFFIX}.jpg"
+        # "file" = exact filename (any name, incl. Hebrew); else photo_N + suffix.
+        # Hebrew names pass fine to ffmpeg via subprocess as long as we chdir'd to
+        # BASE_DIR and use a RELATIVE filename (see "Windows + Hebrew paths").
+        src = shot.get("file") or f"{name}{PHOTO_SUFFIX}.jpg"
         dur = shot["dur"]
         src_dim = get_dim(src)
-        fc = build_photo_filter(shot["motion"], dur, src_dim, dst)
+        fc = build_photo_filter(shot["motion"], dur, src_dim, dst,
+                                shot.get("fx", 0.5), shot.get("fy", 0.5))
         cmd = [
             "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-t", f"{dur}", "-i", src,

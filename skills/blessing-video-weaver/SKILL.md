@@ -145,6 +145,10 @@ settings are the hardened parts — keep them.
 ## Related skills
 
 - `face-track-reframe` — square/landscape clip → 9:16 with dynamic face tracking (stage 4)
+- `talking-head-fx` (from the skills hub, hiyabh.github.io/claude-skills) — face-aimed zooms, portal,
+  pop-up checklist, cut-out on a designed background and more, timed to the words. Use it on a
+  highlighted blessing (the opener, the emotional peak), not on every clip; its runtime drops into
+  the stage-6 HyperFrames graphics
 - `hyperframes`, `hyperframes-cli`, `hyperframes-media` — graphics engine + remove-background
 - `event-recap-video` — photo/clip montage (~50s, no text) — different animal
 - `universal-downloader` — fetch royalty-free music (`yt-dlp -x --download-sections "*0:00-13:00"`)

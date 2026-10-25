@@ -14,6 +14,7 @@ Professional 1:30–2:30 montage videos edited from raw event photos & clips, us
 | `video-production` | User wants AI to GENERATE a video from scratch (script + AI images + TTS) |
 | `hyperframes` | HTML/CSS-based animated compositions with synced captions & overlays |
 | `remotion-best-practices` | React-driven programmatic video with motion design |
+| `talking-head-fx` (skills hub) | One person talking to camera (a reel, a speech clip) → face-aimed zooms, captions, reel effects |
 
 If the user provides a directory of raw event media and wants "ערוך סרטון" / "סרטון סיכום", use THIS skill.
 

@@ -30,6 +30,10 @@ Decide per beat during planning:
   micro-interaction, decorative flourish → Text-To-Lottie.
 - A beat can layer all three (e.g. Manim clip in the background + Lottie icon overlay
   + kinetic headline on top). That layering is exactly what makes it feel "insane".
+- **Real footage of a person talking** (the user on camera, an interview) → `talking-head-fx`
+  (from the skills hub, hiyabh.github.io/claude-skills). It plans and builds face-aimed zooms,
+  chat/phone/editor frames, cut-out backgrounds and karaoke captions from the words. Treat its
+  project as the speaker beats of the beat sheet.
 
 ## Ordered workflow
 
@@ -84,6 +88,7 @@ Decide per beat during planning:
   adapters `lottie` / `gsap` / `animejs` / `css-animations` / `waapi`
 - Explainer animation: `manim-composer`, `manim-skill`, `manimce-best-practices`
 - Vector motion generation: `text-to-lottie` (from `diffusionstudio/lottie`)
+- Talking-head footage effects: `talking-head-fx` (skills hub, not in this bundle)
 
 ## Definition of done
 - A single rendered MP4 from HyperFrames that combines at least two of the three

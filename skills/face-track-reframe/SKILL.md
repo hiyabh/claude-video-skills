@@ -71,6 +71,13 @@ absolute paths. On Windows PowerShell, quote paths with Hebrew/spaces.
 4. **Render** — each frame is cropped at its tracked origin, Lanczos-scaled to the output
    size, and piped to ffmpeg, which re-muxes the **original audio** (`libx264`/`aac`).
 
+## Next step: effects
+
+A reframed talking-head clip is the ideal input for **`talking-head-fx`** (from the skills hub,
+hiyabh.github.io/claude-skills), which adds zooms, captions and reel effects aimed at the face.
+Reframe first: its effects look sharper on a native 9:16 clip than on a 16:9 source cropped at
+render time.
+
 ## Notes & Limits
 
 - Built for a **single speaker**. With multiple faces it follows the largest one.

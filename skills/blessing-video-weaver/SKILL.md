@@ -152,3 +152,5 @@ settings are the hardened parts — keep them.
 - `hyperframes`, `hyperframes-cli`, `hyperframes-media` — graphics engine + remove-background
 - `event-recap-video` — photo/clip montage (~50s, no text) — different animal
 - `universal-downloader` — fetch royalty-free music (`yt-dlp -x --download-sections "*0:00-13:00"`)
+- `archive-media` (from the skills hub) — public-domain 78rpm music and archival film clips from
+  archive.org, rights-graded, with credits (a nostalgic "back then" opener)

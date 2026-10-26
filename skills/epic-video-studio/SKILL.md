@@ -34,6 +34,10 @@ Decide per beat during planning:
   (from the skills hub, hiyabh.github.io/claude-skills). It plans and builds face-aimed zooms,
   chat/phone/editor frames, cut-out backgrounds and karaoke captions from the words. Treat its
   project as the speaker beats of the beat sheet.
+- **Archival b-roll or period music** (retro-tech ad, "then vs now", a 1920s-60s mood) →
+  `archive-media` (from the skills hub). It searches Prelinger films and 78rpm records on
+  archive.org, grades the rights, and cuts 1080p clips and cleaned music for the HyperFrames
+  `assets/`. Only 🟢 items go into a commercial piece.
 
 ## Ordered workflow
 
@@ -89,6 +93,7 @@ Decide per beat during planning:
 - Explainer animation: `manim-composer`, `manim-skill`, `manimce-best-practices`
 - Vector motion generation: `text-to-lottie` (from `diffusionstudio/lottie`)
 - Talking-head footage effects: `talking-head-fx` (skills hub, not in this bundle)
+- Archival footage and period music: `archive-media` (skills hub, not in this bundle)
 
 ## Definition of done
 - A single rendered MP4 from HyperFrames that combines at least two of the three

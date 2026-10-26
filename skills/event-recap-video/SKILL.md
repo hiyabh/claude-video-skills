@@ -15,6 +15,7 @@ Professional 1:30–2:30 montage videos edited from raw event photos & clips, us
 | `hyperframes` | HTML/CSS-based animated compositions with synced captions & overlays |
 | `remotion-best-practices` | React-driven programmatic video with motion design |
 | `talking-head-fx` (skills hub) | One person talking to camera (a reel, a speech clip) → face-aimed zooms, captions, reel effects |
+| `archive-media` (skills hub) | Needs archival b-roll or period music (Prelinger films, 78rpm records) → rights-graded clips that drop into this montage |
 
 If the user provides a directory of raw event media and wants "ערוך סרטון" / "סרטון סיכום", use THIS skill.
 
